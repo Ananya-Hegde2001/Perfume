@@ -1,98 +1,102 @@
-# React + Vite (JavaScript)
+# Nocturne Atelier — Perfume Product Showcase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend-only luxury perfume showcase:
 
-Currently, two official plugins are available:
+- Landing page (brand story + featured picks)
+- Product listing (filter + sort)
+- Product detail view (full specs)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+No backend, no auth, no database. The goal is premium UI, clean component structure, and responsive layouts.
 
-## React Compiler
+## Brand concept
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Nocturne Atelier** is a small-batch perfume house built around restraint: modern resins, polished woods, and florals cut with precision.
+The product copy and specifications are written to feel like a real luxury brand (not generic filler).
 
-## Expanding the ESLint configuration
+## Tech stack (and why)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Vite + React (JavaScript):** fast dev/build feedback and a clean component architecture.
+- **React Router:** client-side navigation for `/`, `/products`, and `/products/:id`.
+- **CSS Modules + CSS variables:** controlled, reusable design system (type, palette, spacing, motion) without inline styling.
 
-```js
-export default defineConfig([
-  # Nocturne Atelier — Product Showcase (Perfume)
+## Setup (exact commands)
 
-  Frontend-only luxury perfume showcase: Landing page → Product listing → Product detail view.
-  No backend, no auth, no database — the focus is premium UI, clean component structure, and responsive layouts.
+Prereqs:
 
-  ## Brand concept
+- Node.js **20.19+** (or **22.12+**). Vite may warn on older 20.x.
 
-  **Nocturne Atelier** is a small-batch perfume house built around restraint: modern resins, polished woods, and florals cut with precision.
-  The product copy and specifications are written to feel like a real luxury brand (not generic filler).
+Install:
 
-  ## Tech stack (and why)
+```bash
+npm install
+```
 
-  - **Vite + React (JavaScript)**: fast dev/build and a clean component architecture.
-  - **React Router**: clean client-side navigation for Landing / Listing / Detail.
-  - **CSS Modules + CSS variables**: strict control over palette, spacing scale, typography, and hover/motion without inline styling.
+Run locally:
 
-  ## Setup (exact commands)
+```bash
+npm run dev
+```
 
-  Prereqs:
-  - Node.js **20.19+** (Vite prints a warning on 20.18; upgrade recommended)
+Production build:
 
-  Install:
+```bash
+npm run build
+```
 
-  ```bash
-  npm install
-  ```
+Preview production build:
 
-  Run locally:
+```bash
+npm run preview
+```
 
-  ```bash
-  npm run dev
-  ```
+Lint:
 
-  Production build:
+```bash
+npm run lint
+```
 
-  ```bash
-  npm run build
-  ```
+## Design decisions
 
-  Preview production build:
+### Typography
 
-  ```bash
-  npm run preview
-  ```
+- Heading font: **Cormorant Garamond** (editorial luxury feel)
+- Body font: **Inter** (clean readability)
 
-  Lint:
+### Palette (max 4 colors)
 
-  ```bash
-  npm run lint
-  ```
+Defined as CSS variables in `src/styles/tokens.css`:
 
-  ## Design decisions
+- Paper: `--color-paper`
+- Ink: `--color-ink`
+- Mist: `--color-mist`
+- Gold accent: `--color-gold`
 
-  - **Typography**
-    - Heading font: *Cormorant Garamond* (luxury editorial feel)
-    - Body font: *Inter* (clean, modern readability)
-  - **Palette (max 4 colors)**
-    - Paper `--color-paper`, Ink `--color-ink`, Mist `--color-mist`, Gold accent `--color-gold`
-    - Defined in [src/styles/tokens.css](src/styles/tokens.css) and reused everywhere.
-  - **Spacing scale**
-    - 4px-based spacing variables (`--space-1` … `--space-8`) to keep rhythm consistent.
-  - **Layout logic**
-    - Product grid is responsive: 1 column (mobile), 2 (tablet), 3–4 (desktop).
-    - Images use fixed aspect ratios and `object-fit: cover` to prevent stretching.
-  - **Motion**
-    - Hover states and transitions use 200–320ms durations with a single easing curve.
+### Spacing scale
 
-  ## Data model
+- 4px-based spacing variables (`--space-1` … `--space-8`) for consistent rhythm.
 
-  Static product data lives in [src/data/products.js](src/data/products.js) and includes:
+### Layout logic
 
-  - `id`, `name`, `price`, `shortDescription`, `fullDescription`, `category`, `image`
-  - Perfume specs: `fragranceNotes` (top/heart/base), `sizeMl`, `longevity`, `occasion`
+- Product grid is responsive: 1 column (mobile), 2 (tablet), 3 (desktop), 4 (wide desktop)
+- Media uses fixed aspect ratios + `object-fit: cover` to avoid stretching
 
-  ## Known limitations / trade-offs
+### Motion
 
-  - No cart/checkout (intentional: frontend-only showcase).
-  - Filters/sort are UI state only (not persisted to URL).
-  - Product imagery is consistent-tone SVG artwork (premium placeholders), not photography.
+- Subtle hover states with a single easing curve and 200–320ms durations
+
+## Product data model
+
+Static product data lives in `src/data/products.js`.
+
+Each product includes:
+
+- `id`, `name`, `price`, `shortDescription`, `fullDescription`, `category`, `image`
+- Perfume specs: `fragranceNotes` (top/heart/base), `sizeMl`, `longevity`, `occasion`
+
+Prices are formatted as **Indian Rupees (INR)** via `src/utils/format.js`.
+
+## Known limitations / trade-offs
+
+- No cart/checkout (intentional: showcase only).
+- Filters/sort are UI state only (not persisted to the URL).
+- Product media is MP4-based; above-the-fold videos are prioritized, while the rest defer loading for smoother scrolling.
