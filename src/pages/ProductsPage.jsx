@@ -70,8 +70,8 @@ export default function ProductsPage() {
         </div>
       ) : (
         <section className={styles.grid} aria-label="Product grid">
-          {filtered.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {filtered.map((product, idx) => (
+            <ProductCard key={product.id} product={product} priority={idx < 6} />
           ))}
         </section>
       )}

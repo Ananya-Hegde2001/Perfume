@@ -6,12 +6,18 @@ import Button from '../Button/Button'
 import ProductMedia from '../ProductMedia/ProductMedia'
 import styles from './ProductCard.module.css'
 
-function ProductCard({ product }) {
+function ProductCard({ product, priority = false }) {
   return (
     <article className={styles.card}>
       <Link to={`/products/${product.id}`} className="focusRing" aria-label={`View ${product.name} details`}>
         <div className={styles.media}>
-          <ProductMedia src={product.image} alt={product.name} className={styles.image} behavior="viewport" />
+          <ProductMedia
+            src={product.image}
+            alt={product.name}
+            className={styles.image}
+            behavior="viewport"
+            priority={priority}
+          />
         </div>
       </Link>
       <div className={styles.body}>

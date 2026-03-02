@@ -10,12 +10,15 @@ function getPrefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
+const VIDEO_POSTER_SVG =
+  "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20160%20200'%3E%3Crect%20width='160'%20height='200'%20fill='%230c0c0f'%20fill-opacity='0.04'/%3E%3Cg%20fill='none'%20stroke='%230c0c0f'%20stroke-opacity='0.22'%20stroke-width='6'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M70%2040h20v22H70z'/%3E%3Cpath%20d='M58%2062h44v18H58z'/%3E%3Cpath%20d='M48%2080h64v96a18%2018%200%2001-18%2018H66a18%2018%200%2001-18-18V80z'/%3E%3C/g%3E%3Ctext%20x='80'%20y='150'%20text-anchor='middle'%20font-family='system-ui,%20-apple-system,%20Segoe%20UI,%20Roboto,%20Arial'%20font-size='44'%20fill='%230c0c0f'%20fill-opacity='0.22'%3EN%3C/text%3E%3C/svg%3E"
+
 /**
  * Renders either an <img> or <video>.
  * - behavior="hover": plays on hover/focus (good for grids)
  * - behavior="autoplay": plays immediately (good for detail/hero)
  */
-function ProductMedia({ src, alt, className, behavior = 'hover' }) {
+function ProductMedia({ src, alt, className, behavior = 'hover', priority = false }) {
   const videoRef = useRef(null)
 
   const isVideo = useMemo(() => isVideoSource(src), [src])
@@ -29,11 +32,10 @@ function ProductMedia({ src, alt, className, behavior = 'hover' }) {
     if (!el) return
 
     // For hero/detail media, warm up immediately so it feels instant.
-    if (behavior === 'autoplay') {
+    if (behavior === 'autoplay' || priority) {
       try {
-        if (el.preload !== 'auto') {
-          el.preload = 'auto'
-        }
+        // priority media should get its first frame ASAP.
+        el.preload = behavior === 'autoplay' ? 'auto' : 'metadata'
         el.load()
       } catch {
         // Ignore load/preload errors.
@@ -48,10 +50,12 @@ function ProductMedia({ src, alt, className, behavior = 'hover' }) {
       }
 
       // Ensure the element is mounted before attempting play.
-      const raf = requestAnimationFrame(() => {
-        void playNow()
-      })
-      return () => cancelAnimationFrame(raf)
+      if (behavior === 'autoplay') {
+        const raf = requestAnimationFrame(() => {
+          void playNow()
+        })
+        return () => cancelAnimationFrame(raf)
+      }
     }
 
     if (behavior !== 'viewport') return
@@ -129,8 +133,16 @@ function ProductMedia({ src, alt, className, behavior = 'hover' }) {
     muted: true,
     loop: true,
     playsInline: true,
+    poster: VIDEO_POSTER_SVG,
     // For grids, avoid fetching every MP4 up-front.
-    preload: behavior === 'autoplay' ? 'auto' : behavior === 'viewport' ? 'none' : 'metadata',
+    preload:
+      behavior === 'autoplay'
+        ? 'auto'
+        : behavior === 'viewport'
+          ? priority
+            ? 'metadata'
+            : 'none'
+          : 'metadata',
     ...a11yProps,
   }
 

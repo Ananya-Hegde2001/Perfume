@@ -9,7 +9,13 @@ function FeaturedProductCard({ product }) {
   return (
     <article className={styles.card}>
       <div className={styles.media}>
-        <ProductMedia src={product.image} alt={product.name} className={styles.image} behavior="viewport" />
+        <ProductMedia
+          src={product.image}
+          alt={product.name}
+          className={styles.image}
+          behavior="viewport"
+          priority
+        />
       </div>
       <div className={styles.meta}>
         <div className="eyebrow">Featured</div>

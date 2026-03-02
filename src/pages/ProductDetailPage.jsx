@@ -49,7 +49,13 @@ export default function ProductDetailPage() {
 
         <section className={styles.grid} aria-label="Product detail">
           <div className={styles.media}>
-            <ProductMedia src={product.image} alt={product.name} className={styles.image} behavior="autoplay" />
+            <ProductMedia
+              src={product.image}
+              alt={product.name}
+              className={styles.image}
+              behavior="autoplay"
+              priority
+            />
           </div>
 
           <div className={styles.info}>

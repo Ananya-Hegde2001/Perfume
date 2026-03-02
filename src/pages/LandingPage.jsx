@@ -30,7 +30,13 @@ export default function LandingPage() {
             </div>
 
             <div className={styles.heroMedia} aria-hidden>
-              <ProductMedia src={heroProduct.image} alt="" className={styles.heroImage} behavior="autoplay" />
+              <ProductMedia
+                src={heroProduct.image}
+                alt=""
+                className={styles.heroImage}
+                behavior="autoplay"
+                priority
+              />
             </div>
           </div>
         </div>
