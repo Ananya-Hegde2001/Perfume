@@ -1,0 +1,26 @@
+.footer {
+  padding-block: var(--space-6);
+  border-top: 1px solid rgba(12, 12, 15, 0.10);
+}
+
+.inner {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.brand {
+  font-family: var(--font-heading);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.meta {
+  color: rgba(12, 12, 15, 0.70);
+  line-height: 1.6;
+}
+
+.small {
+  color: rgba(12, 12, 15, 0.60);
+  font-size: 0.92rem;
+}

@@ -1,0 +1,25 @@
+.wrap {
+  display: grid;
+  gap: 6px;
+}
+
+.label {
+  color: rgba(12, 12, 15, 0.70);
+  font-size: 0.9rem;
+}
+
+.select {
+  border-radius: 12px;
+  border: 1px solid rgba(12, 12, 15, 0.14);
+  background: rgba(255, 255, 255, 0.62);
+  padding: 10px 12px;
+  transition:
+    border-color var(--dur-med) var(--ease-standard),
+    box-shadow var(--dur-med) var(--ease-standard);
+}
+
+.select:focus {
+  outline: none;
+  border-color: rgba(176, 141, 87, 0.55);
+  box-shadow: 0 0 0 4px rgba(176, 141, 87, 0.18);
+}

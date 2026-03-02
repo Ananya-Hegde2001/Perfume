@@ -1,0 +1,25 @@
+.appShell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.skipLink {
+  position: absolute;
+  left: var(--space-5);
+  top: var(--space-5);
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(12, 12, 15, 0.16);
+  transform: translateY(-160%);
+  transition: transform var(--dur-fast) var(--ease-standard);
+}
+
+.skipLink:focus {
+  transform: translateY(0);
+}
+
+.main {
+  padding-block: var(--space-6);
+}

@@ -1,0 +1,63 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(10px);
+  background: rgba(246, 242, 234, 0.72);
+  border-bottom: 1px solid rgba(12, 12, 15, 0.10);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-4);
+}
+
+.brand {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brandName {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+}
+
+.brandTag {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-mist);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.link {
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition:
+    border-color var(--dur-med) var(--ease-standard),
+    background-color var(--dur-med) var(--ease-standard),
+    color var(--dur-med) var(--ease-standard);
+  letter-spacing: 0.02em;
+}
+
+.link:hover {
+  background: rgba(176, 141, 87, 0.08);
+  border-color: rgba(176, 141, 87, 0.28);
+}
+
+.active {
+  border-color: rgba(176, 141, 87, 0.45);
+  background: rgba(176, 141, 87, 0.08);
+}
