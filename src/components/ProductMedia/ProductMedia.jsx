@@ -23,11 +23,38 @@ function ProductMedia({ src, alt, className, behavior = 'hover' }) {
 
   useEffect(() => {
     if (!isVideo) return
-    if (behavior !== 'viewport') return
     if (prefersReducedMotion) return
 
     const el = videoRef.current
     if (!el) return
+
+    // For hero/detail media, warm up immediately so it feels instant.
+    if (behavior === 'autoplay') {
+      try {
+        if (el.preload !== 'auto') {
+          el.preload = 'auto'
+        }
+        el.load()
+      } catch {
+        // Ignore load/preload errors.
+      }
+
+      const playNow = async () => {
+        try {
+          await el.play()
+        } catch {
+          // Ignore autoplay/gesture errors.
+        }
+      }
+
+      // Ensure the element is mounted before attempting play.
+      const raf = requestAnimationFrame(() => {
+        void playNow()
+      })
+      return () => cancelAnimationFrame(raf)
+    }
+
+    if (behavior !== 'viewport') return
 
     const play = async () => {
       try {
@@ -51,13 +78,27 @@ function ProductMedia({ src, alt, className, behavior = 'hover' }) {
       (entries) => {
         const entry = entries[0]
         if (!entry) return
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
+        // Start loading slightly before the video is actually visible.
+        if (entry.isIntersecting) {
+          try {
+            if (el.preload === 'none') {
+              el.preload = 'metadata'
+              el.load()
+            }
+          } catch {
+            // Ignore load/preload errors.
+          }
+        }
+
+        // Play once it's reasonably visible.
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.2) {
           void play()
         } else {
           pause()
         }
       },
-      { threshold: [0, 0.25, 0.45, 0.65, 1] },
+      // rootMargin lets us begin fetching a bit early for smoother scroll-in.
+      { rootMargin: '240px 0px', threshold: [0, 0.2, 0.45, 0.65, 1] },
     )
 
     observer.observe(el)
