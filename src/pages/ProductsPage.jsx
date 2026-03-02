@@ -4,8 +4,18 @@ import Select from '../components/Select/Select'
 import { getCategories, products } from '../data/products'
 import styles from './ProductsPage.module.css'
 
+const SORT_OPTIONS = [
+  { value: 'featured', label: 'Featured' },
+  { value: 'price-asc', label: 'Price: Low to High' },
+  { value: 'price-desc', label: 'Price: High to Low' },
+]
+
 export default function ProductsPage() {
   const categories = useMemo(() => getCategories(), [])
+  const categoryOptions = useMemo(
+    () => [{ value: 'all', label: 'All' }, ...categories.map((c) => ({ value: c, label: c }))],
+    [categories],
+  )
 
   const [category, setCategory] = useState('all')
   const [sort, setSort] = useState('featured')
@@ -39,20 +49,13 @@ export default function ProductsPage() {
               label="Category"
               value={category}
               onChange={setCategory}
-              options={[
-                { value: 'all', label: 'All' },
-                ...categories.map((c) => ({ value: c, label: c })),
-              ]}
+              options={categoryOptions}
             />
             <Select
               label="Sort"
               value={sort}
               onChange={setSort}
-              options={[
-                { value: 'featured', label: 'Featured' },
-                { value: 'price-asc', label: 'Price: Low to High' },
-                { value: 'price-desc', label: 'Price: High to Low' },
-              ]}
+              options={SORT_OPTIONS}
             />
           </div>
         </div>

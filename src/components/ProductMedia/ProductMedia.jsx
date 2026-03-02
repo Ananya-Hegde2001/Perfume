@@ -1,7 +1,13 @@
-import { useEffect, useRef } from 'react'
+import { memo, useEffect, useMemo, useRef } from 'react'
 
 function isVideoSource(src) {
   return typeof src === 'string' && src.toLowerCase().endsWith('.mp4')
+}
+
+function getPrefersReducedMotion() {
+  if (typeof window === 'undefined') return false
+  if (!window.matchMedia) return false
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
 /**
@@ -9,15 +15,11 @@ function isVideoSource(src) {
  * - behavior="hover": plays on hover/focus (good for grids)
  * - behavior="autoplay": plays immediately (good for detail/hero)
  */
-export default function ProductMedia({ src, alt, className, behavior = 'hover' }) {
+function ProductMedia({ src, alt, className, behavior = 'hover' }) {
   const videoRef = useRef(null)
 
-  const isVideo = isVideoSource(src)
-
-  const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const isVideo = useMemo(() => isVideoSource(src), [src])
+  const prefersReducedMotion = useMemo(() => getPrefersReducedMotion(), [])
 
   useEffect(() => {
     if (!isVideo) return
@@ -29,6 +31,12 @@ export default function ProductMedia({ src, alt, className, behavior = 'hover' }
 
     const play = async () => {
       try {
+        // In viewport mode, avoid preloading every MP4 on the page.
+        // Load only when the element is near/inside the viewport.
+        if (el.preload !== 'auto') {
+          el.preload = 'auto'
+          el.load()
+        }
         await el.play()
       } catch {
         // Ignore autoplay/gesture errors.
@@ -59,7 +67,18 @@ export default function ProductMedia({ src, alt, className, behavior = 'hover' }
   const a11yProps = alt ? { 'aria-label': alt } : { 'aria-hidden': true }
 
   if (!isVideo) {
-    return <img className={className} src={src} alt={alt} loading="lazy" />
+    const loading = behavior === 'autoplay' ? 'eager' : 'lazy'
+    const fetchPriority = behavior === 'autoplay' ? 'high' : 'auto'
+    return (
+      <img
+        className={className}
+        src={src}
+        alt={alt}
+        loading={loading}
+        decoding="async"
+        fetchPriority={fetchPriority}
+      />
+    )
   }
 
   const commonProps = {
@@ -69,7 +88,8 @@ export default function ProductMedia({ src, alt, className, behavior = 'hover' }
     muted: true,
     loop: true,
     playsInline: true,
-    preload: behavior === 'autoplay' ? 'auto' : 'metadata',
+    // For grids, avoid fetching every MP4 up-front.
+    preload: behavior === 'autoplay' ? 'auto' : behavior === 'viewport' ? 'none' : 'metadata',
     ...a11yProps,
   }
 
@@ -96,3 +116,5 @@ export default function ProductMedia({ src, alt, className, behavior = 'hover' }
 
   return <video {...commonProps} onMouseEnter={play} onMouseLeave={pause} onFocus={play} onBlur={pause} />
 }
+
+export default memo(ProductMedia)

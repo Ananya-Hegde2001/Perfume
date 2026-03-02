@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
+import { memo } from 'react'
 import { formatPrice } from '../../utils/format'
 import Badge from '../Badge/Badge'
 import Button from '../Button/Button'
 import ProductMedia from '../ProductMedia/ProductMedia'
 import styles from './ProductCard.module.css'
 
-export default function ProductCard({ product }) {
+function ProductCard({ product }) {
   return (
     <article className={styles.card}>
       <Link to={`/products/${product.id}`} className="focusRing" aria-label={`View ${product.name} details`}>
@@ -29,3 +30,5 @@ export default function ProductCard({ product }) {
     </article>
   )
 }
+
+export default memo(ProductCard)

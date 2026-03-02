@@ -1,10 +1,11 @@
+import { memo } from 'react'
 import { formatPrice } from '../../utils/format'
 import Badge from '../Badge/Badge'
 import Button from '../Button/Button'
 import ProductMedia from '../ProductMedia/ProductMedia'
 import styles from './FeaturedProductCard.module.css'
 
-export default function FeaturedProductCard({ product }) {
+function FeaturedProductCard({ product }) {
   return (
     <article className={styles.card}>
       <div className={styles.media}>
@@ -30,3 +31,5 @@ export default function FeaturedProductCard({ product }) {
     </article>
   )
 }
+
+export default memo(FeaturedProductCard)

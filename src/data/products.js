@@ -164,8 +164,10 @@ export const products = [
   },
 ]
 
+const productsById = new Map(products.map((p) => [p.id, p]))
+
 export function getProductById(id) {
-  return products.find((p) => p.id === id)
+  return productsById.get(id)
 }
 
 export function getCategories() {
