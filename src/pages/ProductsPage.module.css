@@ -28,6 +28,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-4);
   align-items: end;
+  width: min(385px, 100%);
 }
 
 @media (max-width: 520px) {
