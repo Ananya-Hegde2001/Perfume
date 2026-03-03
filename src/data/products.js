@@ -11,7 +11,7 @@ export const products = [
     featured: true,
     specs: {
       sizeMl: 50,
-      longevity: 'Very long-lasting',
+      longevity: 'Long-lasting',
       occasion: 'Night',
       fragranceNotes: {
         top: ['Bergamot', 'Black pepper', 'Aldehydes'],
@@ -133,7 +133,7 @@ export const products = [
     image: '/images/products/b032aa344330dc66614ff8c10228ec78_720w.mp4',
     specs: {
       sizeMl: 50,
-      longevity: 'Very long-lasting',
+      longevity: 'Long-lasting',
       occasion: 'Night',
       fragranceNotes: {
         top: ['Plum', 'Bitter tea', 'Black pepper'],

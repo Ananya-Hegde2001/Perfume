@@ -24,9 +24,17 @@
 }
 
 .controls {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-4);
-  flex-wrap: wrap;
+  align-items: end;
+}
+
+@media (max-width: 520px) {
+  .controls {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
 }
 
 .grid {
