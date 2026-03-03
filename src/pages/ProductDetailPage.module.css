@@ -12,7 +12,7 @@
 }
 
 .backLink {
-  padding: 10px 12px;
+  padding: var(--space-2-5) var(--space-3);
   border-radius: 999px;
   border: 1px solid rgba(12, 12, 15, 0.14);
   background: rgba(255, 255, 255, 0.50);
@@ -39,12 +39,87 @@
 }
 
 .media {
+  position: relative;
   aspect-ratio: 4 / 5;
   border-radius: var(--radius-lg);
   overflow: clip;
   border: 1px solid rgba(176, 141, 87, 0.22);
   background: rgba(12, 12, 15, 0.04);
   box-shadow: 0 28px 90px rgba(12, 12, 15, 0.14);
+}
+
+.mediaNext,
+.mediaPrev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(12, 12, 15, 0.14);
+  background: rgba(255, 255, 255, 0.78);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition:
+    transform var(--dur-fast) var(--ease-standard),
+    opacity var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-med) var(--ease-standard),
+    background-color var(--dur-med) var(--ease-standard),
+    box-shadow var(--dur-med) var(--ease-standard);
+}
+
+.mediaHoverNext .mediaNext {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mediaHoverNext:hover .mediaNext,
+.mediaHoverNext:focus-within .mediaNext {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mediaNext {
+  right: var(--space-3);
+}
+
+.mediaPrev {
+  left: var(--space-3);
+}
+
+.mediaNext:hover,
+.mediaPrev:hover {
+  border-color: rgba(176, 141, 87, 0.55);
+  background: rgba(255, 255, 255, 0.90);
+  box-shadow: 0 10px 24px rgba(12, 12, 15, 0.12);
+}
+
+.mediaNext:active {
+  transform: translateY(-50%) translateX(1px);
+}
+
+.mediaPrev:active {
+  transform: translateY(-50%) translateX(-1px);
+}
+
+.mediaNext::before,
+.mediaPrev::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid rgba(12, 12, 15, 0.60);
+  border-bottom: 2px solid rgba(12, 12, 15, 0.60);
+}
+
+.mediaNext::before {
+  transform: rotate(-45deg);
+  margin-left: 2px;
+}
+
+.mediaPrev::before {
+  transform: rotate(135deg);
+  margin-right: 2px;
 }
 
 .image {
@@ -154,8 +229,8 @@
 }
 
 .noteList {
-  margin: 8px 0 0;
-  padding-left: 18px;
+  margin: var(--space-2) 0 0;
+  padding-left: var(--space-4);
   color: rgba(12, 12, 15, 0.78);
   line-height: 1.7;
 }

@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Badge from '../components/Badge/Badge'
 import Button from '../components/Button/Button'
@@ -6,9 +7,57 @@ import { getProductById } from '../data/products'
 import { formatPrice } from '../utils/format'
 import styles from './ProductDetailPage.module.css'
 
+function MediaViewer({ media, alt }) {
+  const [idx, setIdx] = useState(0)
+  const current = media[idx] ?? media[0]
+
+  const showPrev = () => {
+    setIdx((v) => Math.max(0, v - 1))
+  }
+
+  const showNext = () => {
+    setIdx((v) => Math.min(media.length - 1, v + 1))
+  }
+
+  const canPrev = idx > 0
+  const canNext = idx < media.length - 1
+
+  return (
+    <div className={`${styles.media} ${idx === 0 ? styles.mediaHoverNext : ''}`}>
+      <ProductMedia src={current} alt={alt} className={styles.image} behavior="autoplay" priority />
+      {media.length > 1 ? (
+        <>
+          {canPrev ? (
+            <button
+              type="button"
+              className={`${styles.mediaPrev} focusRing`}
+              onClick={showPrev}
+              aria-label="Previous media"
+            />
+          ) : null}
+          {canNext ? (
+            <button
+              type="button"
+              className={`${styles.mediaNext} focusRing`}
+              onClick={showNext}
+              aria-label="Next media"
+            />
+          ) : null}
+        </>
+      ) : null}
+    </div>
+  )
+}
+
 export default function ProductDetailPage() {
   const { id } = useParams()
   const product = id ? getProductById(id) : undefined
+
+  const media = useMemo(() => {
+    if (!product) return []
+    const gallery = Array.isArray(product.gallery) ? product.gallery : []
+    return [product.image, ...gallery].filter(Boolean)
+  }, [product])
 
   if (!product) {
     return (
@@ -48,15 +97,7 @@ export default function ProductDetailPage() {
         </div>
 
         <section className={styles.grid} aria-label="Product detail">
-          <div className={styles.media}>
-            <ProductMedia
-              src={product.image}
-              alt={product.name}
-              className={styles.image}
-              behavior="autoplay"
-              priority
-            />
-          </div>
+          <MediaViewer key={product.id} media={media} alt={product.name} />
 
           <div className={styles.info}>
             <h1 className={styles.name}>{product.name}</h1>
