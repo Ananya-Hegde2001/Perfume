@@ -7,7 +7,7 @@ export const products = [
     fullDescription:
       'Velvet Ember opens with a cool spark of bergamot and black pepper before the heart blooms into powdered iris and a faint trace of saffron. The dry-down is all glow: amber resins, tonka, and a whisper of cocoa husk that feels like warm velvet against skin. Built to wear close at first—then linger for hours with a soft, luxurious trail.',
     category: 'Extrait de Parfum',
-    image: '/images/products/1bfc6ced215371f03e895235adff47a5_720w.mp4',
+    image: '/images/products/a494e2d08a6b0a4305001b170fe78324_720w.mp4',
     featured: true,
     specs: {
       sizeMl: 50,
@@ -110,7 +110,7 @@ export const products = [
     fullDescription:
       'Gilded Neroli captures the moment sunlight hits skin. Bright neroli and petitgrain lead into orange blossom with a subtle honeyed sheen. The base is clean woods and a measured touch of vanilla—never gourmand, always polished.',
     category: 'Eau de Parfum',
-    image: '/images/products/a494e2d08a6b0a4305001b170fe78324_720w.mp4',
+    image: '/images/products/1bfc6ced215371f03e895235adff47a5_720w.mp4',
     specs: {
       sizeMl: 75,
       longevity: 'Long-lasting',
