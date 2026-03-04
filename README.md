@@ -113,3 +113,7 @@ Prices are formatted as **Indian Rupees (INR)** via `src/utils/format.js`.
 - No cart/checkout (intentional: showcase only).
 - Filters/sort are UI state only (not persisted to the URL).
 - Product media is MP4-based; above-the-fold videos are prioritized, while the rest defer loading for smoother scrolling.
+
+## Live Website
+
+<h2 align="center"><a href="https://perfumeproduct-showcase.vercel.app" target="_blank">Visit My Built Website</a></h2>
