@@ -21,35 +21,48 @@ The product copy and specifications are written to feel like a real luxury brand
 
 ## Setup (exact commands)
 
-Prereqs:
+### 1) Prereqs
 
 - Node.js **20.19+** (or **22.12+**). Vite may warn on older 20.x.
 
-Install:
+### 2) Get the code
+
+If you already have the repo checked out, skip this section.
+
+```bash
+git clone <YOUR_REPO_URL>
+cd Perfume
+```
+
+### 3) Install
 
 ```bash
 npm install
 ```
 
-Run locally:
+### 4) Run locally
 
 ```bash
 npm run dev
 ```
 
-Production build:
+Then open:
+
+- http://localhost:5173
+
+### 5) Production build
 
 ```bash
 npm run build
 ```
 
-Preview production build:
+### 6) Preview production build
 
 ```bash
 npm run preview
 ```
 
-Lint:
+### 7) Lint
 
 ```bash
 npm run lint
@@ -66,10 +79,10 @@ npm run lint
 
 Defined as CSS variables in `src/styles/tokens.css`:
 
-- Paper: `--color-paper`
-- Ink: `--color-ink`
-- Mist: `--color-mist`
-- Gold accent: `--color-gold`
+- Paper: `--color-paper` (warm, editorial background to avoid stark white)
+- Ink: `--color-ink` (high-contrast text that still feels soft, not pure black)
+- Mist: `--color-mist` (subtle surfaces/dividers for depth without heavy borders)
+- Gold accent: `--color-gold` (restrained luxury accent for highlights and focus)
 
 ### Spacing scale
 
