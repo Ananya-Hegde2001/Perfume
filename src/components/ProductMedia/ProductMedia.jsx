@@ -17,8 +17,9 @@ const VIDEO_POSTER_SVG =
  * Renders either an <img> or <video>.
  * - behavior="hover": plays on hover/focus (good for grids)
  * - behavior="autoplay": plays immediately (good for detail/hero)
+ * - posterSrc: optional poster image for videos (shows instantly while MP4 loads)
  */
-function ProductMedia({ src, alt, className, behavior = 'hover', priority = false }) {
+function ProductMedia({ src, alt, className, behavior = 'hover', priority = false, posterSrc }) {
   const videoRef = useRef(null)
 
   const isVideo = useMemo(() => isVideoSource(src), [src])
@@ -107,7 +108,7 @@ function ProductMedia({ src, alt, className, behavior = 'hover', priority = fals
 
     observer.observe(el)
     return () => observer.disconnect()
-  }, [behavior, isVideo, prefersReducedMotion, src])
+  }, [behavior, isVideo, prefersReducedMotion, priority, src])
 
   const a11yProps = alt ? { 'aria-label': alt } : { 'aria-hidden': true }
 
@@ -133,7 +134,7 @@ function ProductMedia({ src, alt, className, behavior = 'hover', priority = fals
     muted: true,
     loop: true,
     playsInline: true,
-    poster: VIDEO_POSTER_SVG,
+    poster: posterSrc || VIDEO_POSTER_SVG,
     // For grids, avoid fetching every MP4 up-front.
     preload:
       behavior === 'autoplay'

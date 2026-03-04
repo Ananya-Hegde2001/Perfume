@@ -36,6 +36,7 @@ export default function LandingPage() {
                 className={styles.heroImage}
                 behavior="autoplay"
                 priority
+                posterSrc={heroProduct.gallery?.[0]}
               />
             </div>
           </div>

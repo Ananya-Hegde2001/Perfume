@@ -7,7 +7,7 @@ import { getProductById } from '../data/products'
 import { formatPrice } from '../utils/format'
 import styles from './ProductDetailPage.module.css'
 
-function MediaViewer({ media, alt }) {
+function MediaViewer({ media, alt, posterSrc }) {
   const [idx, setIdx] = useState(0)
   const current = media[idx] ?? media[0]
 
@@ -24,7 +24,14 @@ function MediaViewer({ media, alt }) {
 
   return (
     <div className={`${styles.media} ${idx === 0 ? styles.mediaHoverNext : ''}`}>
-      <ProductMedia src={current} alt={alt} className={styles.image} behavior="autoplay" priority />
+      <ProductMedia
+        src={current}
+        alt={alt}
+        className={styles.image}
+        behavior="autoplay"
+        priority
+        posterSrc={posterSrc}
+      />
       {media.length > 1 ? (
         <>
           {canPrev ? (
@@ -97,7 +104,7 @@ export default function ProductDetailPage() {
         </div>
 
         <section className={styles.grid} aria-label="Product detail">
-          <MediaViewer key={product.id} media={media} alt={product.name} />
+          <MediaViewer key={product.id} media={media} alt={product.name} posterSrc={product.gallery?.[0]} />
 
           <div className={styles.info}>
             <h1 className={styles.name}>{product.name}</h1>

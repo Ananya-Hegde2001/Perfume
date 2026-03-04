@@ -15,6 +15,7 @@ function FeaturedProductCard({ product }) {
           className={styles.image}
           behavior="viewport"
           priority
+          posterSrc={product.gallery?.[0]}
         />
       </div>
       <div className={styles.meta}>

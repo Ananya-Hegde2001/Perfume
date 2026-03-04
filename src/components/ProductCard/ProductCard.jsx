@@ -17,6 +17,7 @@ function ProductCard({ product, priority = false }) {
             className={styles.image}
             behavior="viewport"
             priority={priority}
+            posterSrc={product.gallery?.[0]}
           />
         </div>
       </Link>
